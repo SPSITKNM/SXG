@@ -1,9 +1,14 @@
-# Procesy a Pipe v OS
+# 🧠 Procesy a Pipe v operačnom systéme
 
-Proces : bežiaca inštanca programu v operačnom systéme 
+Tento dokument vysvetľuje princípy **procesov, PCB, forku, wait()** a **pipe** v operačnom systéme. Obsahuje texty a diagramy formátované ako bloky kódu pre zachovanie štruktúry.
+
+---
+
+## 🧩 Proces : bežiaca inštanca programu v operačnom systéme 
 
 štruktúra procesu 
 
+```text
 ┌─────────────────────────────────┐
 │      PROCES V PAMÄTI            │
 ├─────────────────────────────────┤
@@ -19,10 +24,12 @@ Proces : bežiaca inštanca programu v operačnom systéme
 ├─────────────────────────────────┤
 │  KERNEL SPACE                   │  ← Dáta jadra OS (nedostupné užívateľovi)
 └─────────────────────────────────┘
+```
 
-proces môže moze byt v niekolkych stavoch 
+### 🌀 Stavový diagram procesu v niekolkych stavoch 
 
 
+```text
     ┌─────────────┐
     │    NEW      │  ← Proces sa práve vytvára
     └──────┬──────┘
@@ -37,12 +44,18 @@ proces môže moze byt v niekolkych stavoch
        │   │   │
        ↓   ↓   ↓
    WAITING READY TERMINATED
+```
 
 
+```text
    Proces control block == PCb
+```
 
+```text
    OS udržuje pre kazdy proces pcb štrukturu ktorý vyzerá takto : struct PCB {
+```
 
+```text
     pid_t pid;                   Process ID
     pid_t ppid;                  Parent PID
     int state;                   READY, RUNNING, WAITING...
@@ -53,25 +66,31 @@ proces môže moze byt v niekolkych stavoch
     FileDescriptor* fd_table;    Otvorené súbory
     MemoryMap* memory;           Mapa pamäte
     // ... ďalšie údaje
+```
 };
 
 
 Každý proces má svoj PCB
 
+```text
 ┌─────────────────┐
 │   RODIČ PCB     │
 │   PID:  1000    │ ← Jeho jedinečné ID
 │   PPID: 999     │ ← ID jeho rodiča
 └─────────────────┘
+```
 
 2. Po fork() vznikne kópia s vlastným PCB
 
+```text
 ┌─────────────────┐
 │  POTOMOK PCB    │
 │   PID:  1001    │ ← NOVÉ jedinečné ID
 │   PPID: 1000    │ ← ID rodiča (z ktorého vznikol)
 └─────────────────┘
+```
 
+```text
 ┌─────────────────────────────────────────┐
 │            POTOMOK PCB                  │
 ├─────────────────────────────────────────┤
@@ -85,11 +104,13 @@ Každý proces má svoj PCB
 └─────────────────────────────────────────┘
          ↑
    POZOR V PCB NIE JE žiadna "0"!
+```
 
 Kde teda je tá "0"?
 
 Tá "0" je v pamäti procesu, nie v PCB!
 
+```text
 ┌──────────────────────────────────────────────────┐
 │         USER SPACE PAMÄŤ POTOMKA                 │
 ├──────────────────────────────────────────────────┤
@@ -100,10 +121,12 @@ Tá "0" je v pamäti procesu, nie v PCB!
 │      Premenná pid obsahuje: 0                    │
 │  }                                               │
 └──────────────────────────────────────────────────┘
+```
 
 Rozdiel medzi PCB a pamäťou procesu
 
 KERNEL SPACE (spravuje OS):
+```text
 ┌─────────────────────┐
 │   PCB POTOMKA       │
 │   PID:  1001        │ ← Toto je ID procesu
@@ -111,9 +134,11 @@ KERNEL SPACE (spravuje OS):
 └─────────────────────┘
         ↑
     Nedostupné z kódu
+```
 
 
 USER SPACE (tvoj program):
+```text
 ┌─────────────────────┐
 │   Pamäť programu    │
 │                     │
@@ -122,10 +147,11 @@ USER SPACE (tvoj program):
 └─────────────────────┘
         ↑
     Môžeš pristupovať z kódu
+```
 
 Čo sa stane pri for () ? 
 
-Čo sa stane pri fork()
+## ⚙️ Čo sa stane pri fork()()
 
 Kernel vytvorí nový PCB s PID 1001
 Kernel nakopíruje pamäť rodiča do potomka
@@ -137,19 +163,23 @@ V potomkovi: do registra CPU uloží 0
 
 Keď sa proces vráti z fork(), uloží hodnotu z registra do premennej pid
 
-Analogia 
+### 🧬 Analógia 
 
 RODIČ:
+```text
 ┌─────────────────┐
 │ Môj dom: 1000   │ ← Môj PID
 │ Syn býva: 1001  │ ← Premenná pid (adresa syna)
 └─────────────────┘
+```
 
 POTOMOK:
+```text
 ┌─────────────────┐
 │ Môj dom: 1001   │ ← Môj PID
 │ Som syn: 0      │ ← Premenná pid (signál "som syn")
 └─────────────────┘
+```
 
 
 
@@ -157,6 +187,7 @@ POTOMOK:
 
 KERNEL robí toto:
 
+```text
 ┌──────────────────────┐
 │   fork() vnútorne:   │
 ├──────────────────────┤
@@ -168,7 +199,9 @@ KERNEL robí toto:
 │ 5. V POTOMKOVI:      │
 │    return 0;         │  ← Vráti 0
 └──────────────────────┘
+```
 
+```text
 ┌─────────────────────────────┐     ┌─────────────────────────────┐
 │     RODIČ                   │     │     POTOMOK                 │
 │     PID = 1000              │     │     PID = 1001              │
@@ -186,34 +219,43 @@ KERNEL robí toto:
 │      }                      │     │                             │
 │  }                          │     │  }                          │
 └─────────────────────────────┘     └─────────────────────────────┘
+```
 
 
 Vizualizácia celého procesu
 
 
 PRED fork():
+```text
 ═══════════════════════════════════════
+```
 RODIČ (PID 1000):
   PCB: { PID: 1000, PPID: 999, ... }
   Pamäť: { int main() { pid_t pid; ... } }
 
 
 PO fork():
+```text
 ═══════════════════════════════════════
+```
 RODIČ (PID 1000):
   PCB: { PID: 1000, PPID: 999, ... }
   Pamäť: { pid = 1001; }  ← návratová hodnota fork()
+```text
            ↑
        Uložená v USER SPACE!
+```
 
 POTOMOK (PID 1001):
   PCB: { PID: 1001, PPID: 1000, ... }
   Pamäť: { pid = 0; }  ← návratová hodnota fork()
+```text
            ↑
        Uložená v USER SPACE!
+```
 
 
-Kde ma značku 0 ? 
+### ❓ Kde sa nachádza hodnota 0 ? 
 
 v premennej pid v user space pamati nie v pcb 
 
@@ -226,41 +268,61 @@ getpid() --> číta z PCB ---> vracia 1001
 Aký je call pri volaní fork ? 
 
 1. Zavoláš fork()
+```text
    ↓
+```
 2. Kernel vytvorí kópiu procesu (nový PCB s novým PID)
+```text
    ↓
+```
 3. Kernel VEDOME nastaví návratovú hodnotu fork():
+```text
    - V rodičovi: vráti PID potomka (napr. 1001) == prečo ? bez pid by rodič nevedel na koho čaká u wait totožne tak pre signaly napr kill , pre sledovanie potomkov 
    - V potomkovi: vráti 0
    ↓
+```
 4. Táto návratová hodnota sa uloží do premennej:
+```text
    pid_t pid = fork();
+```
 
+```text
    Ako to robí kernel ? 
+```
 
 Pseudokód toho, čo kernel robí vnútorne:
 
 void kernel_fork() {
 
+```text
     // 1. Vytvor nový PCB
     PCB* child = create_new_process();
     child->pid = 1001;
     child->ppid = current_process->pid;
+```
     
+```text
     // 2. Skopíruj pamäť
     copy_memory(current_process, child);
+```
     
+```text
     // 3. KRITICKÉ: Nastav návratové hodnoty
     current_process->return_value = child->pid;   Rodič dostane 1001
     child->return_value = 0;                      Potomok dostane 0
+```
     
+```text
     // 4. Obaja procesy sa teraz prebudia z fork()
+```
 
 
+```text
     0 teda hovorí nemam ziadnych vlastnych potomkov 
+```
 }
 
-Funkcia wait 
+## ⏳ Funkcia wait() 
 
 
 = rodič musi počkať na ukončenie potomka 
@@ -269,7 +331,7 @@ Funkcia wait
 
 
 
-Funkcia waitpid 
+## ⏳ Funkcia wait()pid 
 
 počká len na toho jedného 
 
@@ -279,6 +341,7 @@ Kernel si pamätá vzťahy rodič poto
 čo sa deje ? 
 
 RODIČ volá wait():
+```text
 │
 ├─> Kernel: "Hľadám potomkov s PPID = 1000"
 │
@@ -299,14 +362,18 @@ RODIČ volá wait():
 │   Vyčistím zombie 1001
 │
 └─> wait() vráti: 1001
+```
 
 Praktický príklad : 
 
 Jeden potomok ( nepotrebuješ PID )
 
 int main() {
+```text
     fork();   Nemusíš ukladať PID!
+```
     
+```text
     if (fork() == 0) {
         // POTOMOK
         printf("Potomok\n");
@@ -316,6 +383,7 @@ int main() {
         wait(NULL);   Kernel sám nájde potomka
         printf("Hotovo\n");
     }
+```
 }
 
 Kernel vie, že tento proces má potomka (podľa PPID v tabuľke)
@@ -324,6 +392,7 @@ Nemusíš špecifikovať PID
 
 TABUĽKA PROCESOV (v kernel space):
 
+```text
 ┌──────────────────────────────────────┐
 │ PID  │ PPID │ STATE    │ ...         │
 ├──────────────────────────────────────┤
@@ -337,49 +406,65 @@ TABUĽKA PROCESOV (v kernel space):
          ↑
        PPID umožňuje kernelu nájsť
        všetkých potomkov rodiča
+```
 
 Ako to funguje v pozadí vyhľadávania 
 
 Process* find_children(pid_t parent_pid) {
+```text
     // ↑ Vráti ukazovateľ na Process (alebo pole procesov)
     //                    ↑ Parameter: PID rodiča
+```
     
+```text
     Process* children = [];
     // ↑ Pole ukazovateľov na procesy (potomkov)
+```
     
+```text
     for (each process in process_table) {
         // ↑ Iteruj cez VŠETKY procesy v systéme
         //   process_table = globálna tabuľka všetkých PCB
+```
         
+```text
         if (process.ppid == parent_pid) {
             // ↑ Ak PPID tohto procesu == parent_pid
             //   → Tento proces JE potomok!
+```
             
+```text
             children.append(process);
             // ↑ Pridaj ho do zoznamu potomkov
         }
     }
+```
     
+```text
     return children;
     // ↑ Vráť pole všetkých nájdených potomkov
+```
 }
 
-Pipe roura pre jednosmernú komunikácou medzi procesmi 
+## 🧮 Pipe (Roura) – komunikácia medzi procesmi pre jednosmernú komunikácou medzi procesmi 
 
 Prečo pipe existuje?
 
 Problém: Procesy sú izolované
 
+```text
 ┌─────────────────┐         ┌─────────────────┐
 │   PROCES A      │         │   PROCES B      │
 │   PID: 1000     │    ?    │   PID: 1001     │
 │   Pamäť: 0x1000 │────X────│   Pamäť: 0x3000 │
 └─────────────────┘         └─────────────────┘
+```
 
 Každý proces má vlastnú pamäť. Proces A nemôže priamo čítať pamäť procesu B.
 
 Riešenie: Pipe cez kernel
 
+```text
 ┌─────────────────┐                     ┌─────────────────┐
 │   PROCES A      │                     │   PROCES B      │
 │   write(fd, ..) │────┐         ┌──────│   read(fd, ..)  │
@@ -391,6 +476,7 @@ Riešenie: Pipe cez kernel
                   │  PIPE BUFFER     │
                   │  [DÁTA DÁTA]     │
                   └──────────────────┘
+```
 
 
 Kernel poskytuje zdieľaný buffer, kde:
@@ -419,6 +505,7 @@ nacratova hodnota je 0 and -1
 
 
 PRED pipe():
+```text
 ┌──────────────────────────────────┐
 │  FILE DESCRIPTOR TABLE           │
 ├────┬─────────────────────────────┤
@@ -426,8 +513,10 @@ PRED pipe():
 │ 1  │ stdout                      │
 │ 2  │ stderr                      │
 └────┴─────────────────────────────┘
+```
 
 PO pipe(pipefd):
+```text
 ┌──────────────────────────────────────────────┐
 │  FILE DESCRIPTOR TABLE                       │
 ├────┬─────────────────────────────────────────┤
@@ -437,6 +526,7 @@ PO pipe(pipefd):
 │ 3  │ PIPE READ end  ────┐                    │
 │ 4  │ PIPE WRITE end ────┼──> [PIPE BUFFER]    │
 └────┴────────────────────┴─────────────────────┘
+```
 
 
 Kernel:
@@ -451,16 +541,19 @@ PIPE
 
 Problém: Procesy sú izolované
 
+```text
 ┌─────────────────┐            ┌─────────────────┐
 │   PROCES A      │    ?       │   PROCES B      │
 │   PID: 1000     │    X       │   PID: 1001     │
 │   int x = 42;   │ nemôže     │   int y;        │
 │   Pamäť: 0x1000 │ pristúpiť  │  Pamäť: 0x3000  │
 └─────────────────┘            └─────────────────┘
+```
 
 Každý proces má vlastnú pamäť. Proces A nemôže čítať x z procesu B priamo.
 
 
+```text
 ┌─────────────────┐                     ┌─────────────────┐
 │   PROCES A      │                     │   PROCES B      │
 │                 │                     │                 │
@@ -475,6 +568,7 @@ Každý proces má vlastnú pamäť. Proces A nemôže čítať x z procesu B pr
                   │  │[DÁTA DÁTA] │  │
                   │  └────────────┘  │
                   └──────────────────┘
+```
 
 Proces A zapisuje dáta 
 Proces B číta dáta 
@@ -483,11 +577,15 @@ Kernel synchronizuje
 
 Analógia pre lepšie pochopenie : 
 
+```text
 ┌──────────┐         ┌─────────────────┐         ┌──────────┐
 │ KOHÚTIK  │────────>│   RÚRA/POTRUBIE │────────>│  VEDRO   │
 └──────────┘         └─────────────────┘         └──────────┘
+```
   Nalievaš               Voda tečie              Vyteká
+```text
    vodu                  jedným smerom            voda
+```
 
 Voda tečie len jedným smerom ( jednosmerná komunikácia )
 
@@ -501,7 +599,9 @@ int pipe(int pipefd[2]);
 
 Parametre : 
 
+```text
     pipefd - pole 2 integerov ( file descriptors )
+```
 
 Po úspešnom volaní:
 
@@ -515,18 +615,21 @@ príklad vytvorenia :
 int pipefd[2];
 
 if (pipe(pipefd) == -1) {
+```text
     perror("pipe");
     exit(1);
+```
 }
 
 printf("Pipe vytvorená!\n");
 printf("pipefd[0] = %d (READ koniec)\n", pipefd[0]);    napr. 3
 printf("pipefd[1] = %d (WRITE koniec)\n", pipefd[1]);   napr. 4
 
-Čo je to teda File Descriptor (FD) 
+## 💾 File Descriptor (FD) (FD) 
 
 File descriptor je malé celé číslo (integer), ktoré reprezentuje otvorený "súbor":
 
+```text
 ┌────────────────────────────────────────┐
 │  Tvoj program (USER SPACE)             │
 │                                        │
@@ -541,6 +644,7 @@ File descriptor je malé celé číslo (integer), ktoré reprezentuje otvorený 
 │                                        │
 │  FD 3 → ukazuje na pipe read end      │
 └────────────────────────────────────────┘
+```
 
 read(3, buffer, 100);
 
@@ -562,6 +666,7 @@ Každý proces má automaticky otvorené:
 PRED pipe():
 
 PROCES:
+```text
 ┌──────────────────────────────────┐
 │  FILE DESCRIPTOR TABLE           │
 ├────┬─────────────────────────────┤
@@ -569,8 +674,10 @@ PROCES:
 │ 1  │ stdout                      │
 │ 2  │ stderr                      │
 └────┴─────────────────────────────┘
+```
 
 PROCES:
+```text
 ┌──────────────────────────────────────────────┐
 │  FILE DESCRIPTOR TABLE                       │
 ├────┬─────────────────────────────────────────┤
@@ -589,6 +696,7 @@ PROCES:
                     │  [........]  │
                     │   64 KB max  │
                     └──────────────┘
+```
 
 
 Kernel:
@@ -601,6 +709,7 @@ FD 4 → zapisovací koniec bufferu
 Vnútorná štruktúra pipe
 
 USER SPACE:                  KERNEL SPACE:
+```text
 ┌─────────────┐             ┌──────────────────────────┐
 │ pipefd[0]=3 │────────────>│  READ ENDPOINT           │
 │             │             │         ↓                │
@@ -612,6 +721,7 @@ USER SPACE:                  KERNEL SPACE:
 │             │             │         ↑                │
 │ pipefd[1]=4 │────────────>│  WRITE ENDPOINT          │
 └─────────────┘             └──────────────────────────┘
+```
 
 
 Buffer vlastnosti:
@@ -621,7 +731,7 @@ Typ: FIFO (First In, First Out) - fronta
 Umiestnenie: Kernel space (nedostupný priamo z programu)
 Atomické operácie (kernel zabezpečuje synchronizáciu)
 
-Základná komunikácia - Jednoduchý príklad
+## 🔄 Základná komunikácia – Príklad - Jednoduchý príklad
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -629,67 +739,96 @@ Základná komunikácia - Jednoduchý príklad
 #include <string.h>
 
 int main() {
+```text
     int pipefd[2];
+```
     
+```text
     // 1. Vytvor pipe
     if (pipe(pipefd) == -1) {
         perror("pipe");
         exit(1);
     }
+```
     
+```text
     printf("Pipe vytvorená: READ=%d, WRITE=%d\n", 
            pipefd[0], pipefd[1]);
+```
     
+```text
     // 2. Fork - vytvor potomka
     pid_t pid = fork();
+```
     
+```text
     if (pid == 0) {
         // ===== POTOMOK - ČITATEĽ =====
         printf("[POTOMOK] Zatvárám write end\n");
         close(pipefd[1]);  // Nepotrebujem písanie
+```
         
+```text
         char buffer[100];
         printf("[POTOMOK] Čakám na dáta...\n");
         ssize_t n = read(pipefd[0], buffer, 100);
+```
         
+```text
         printf("[POTOMOK] Prijal som %zd bytov: %s\n", n, buffer);
+```
         
+```text
         close(pipefd[0]);
         exit(0);
+```
         
+```text
     } else {
         // ===== RODIČ - ZAPISOVATEĽ =====
         printf("[RODIČ] Zatvárám read end\n");
         close(pipefd[0]);  // Nepotrebujem čítanie
+```
         
+```text
         char msg[] = "Ahoj potomok!";
         printf("[RODIČ] Posielam správu...\n");
         write(pipefd[1], msg, strlen(msg) + 1);
+```
         
+```text
         printf("[RODIČ] Správa odoslaná\n");
         close(pipefd[1]);
+```
         
+```text
         wait(NULL);  // Počkaj na potomka
         printf("[RODIČ] Hotovo\n");
     }
+```
     
+```text
     return 0;
+```
 }
 
 
-Čo sa stalo ? Krok po kroku 
+## 🪜 Kroky vykonania programu ? Krok po kroku 
 
 Krok 1: pipe() v rodičovi
 
 RODIČ:
+```text
 ┌───────────────────────────┐
 │ pipefd[0] = 3 (READ)      │──┐
 │ pipefd[1] = 4 (WRITE)     │──┼──> [PIPE BUFFER: prázdny]
 └───────────────────────────┘  ---> 
+```
 
 Krok 2: fork()
 
 RODIČ:                          POTOMOK:
+```text
 ┌───────────────────────────┐  ┌───────────────────────────┐
 │ pipefd[0] = 3 (READ)      │  │ pipefd[0] = 3 (READ)      │
 │ pipefd[1] = 4 (WRITE)     │  │ pipefd[1] = 4 (WRITE)     │
@@ -698,6 +837,7 @@ RODIČ:                          POTOMOK:
         └──────────────┬───────────────┘
                        ↓
                 [PIPE BUFFER: prázdny]
+```
 
 Dôležité: Obaja zdieľajú rovnaký file descritptor smerujúce na rovnaký pipe buffer!
 
@@ -706,6 +846,7 @@ Krok 3: Zatváranie nepoužívaných koncov
 
 
 RODIČ:                          POTOMOK:
+```text
 ┌───────────────────────────┐  ┌───────────────────────────┐
 │ close(pipefd[0]) ✗        │  │ close(pipefd[1]) ✗        │
 │                           │  │                           │
@@ -714,6 +855,7 @@ RODIČ:                          POTOMOK:
                                 └───────────────────────────┘
                                         ↓
                                  [PIPE BUFFER]
+```
 
 Krok 4: Rodič píše
 
@@ -722,9 +864,11 @@ RODIČ:
 write(4, "Ahoj potomok!", 14);
 
 [PIPE BUFFER]:
+```text
 ┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬──┐
 │A│h│o│j│ │p│o│t│o│m│o│k│!│\0│
 └─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴──┘
+```
  ↑                            ↑
  write                      14 bytov
 
@@ -740,18 +884,31 @@ Buffer potomka:
 [prázdny - dáta vyčítané]
 
 
---------- Celková štruktúra domácej prípravy ----------
+---
+
+## 🧩 Celková štruktúra projektu
+
 
 [Router 1 - Generuje data]
+```text
           ↓
+```
 [Router 2 - Čísluje pakety]
+```text
           ↓
+```
 [Router 3 - Měří délku]
+```text
           ↓
+```
 [Router 4 - převod na malá písmena]  ← NOVÝ
+```text
           ↓
+```
 [Router 5 - převod na velká písmena] ← NOVÝ
+```text
           ↓
+```
 [Parent]
 
 Kontrola funkcionality zadania   
