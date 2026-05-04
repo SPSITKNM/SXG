@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SXG — SMART Technológie | SPSITKNM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg:#030712; --surface:rgba(15,23,42,0.65);
+      --border:rgba(6,182,212,0.18); --ba:rgba(6,182,212,0.55);
+      --accent:#06b6d4; --a2:#0891b2; --glow:rgba(6,182,212,0.4);
+      --em:#10b981; --indigo:#6366f1;
+      --text:#f1f5f9; --muted:#94a3b8; --faint:#475569;
+      --mono:'Fira Code',monospace; --sans:'Inter',system-ui,sans-serif;
+    }
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;}
+    ::-webkit-scrollbar{width:5px;}
+    ::-webkit-scrollbar-track{background:var(--bg);}
+    ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px;}
+
+    .bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:radial-gradient(ellipse 80% 50% at 50% -5%,rgba(6,182,212,0.08),transparent);}
+    .orb{position:absolute;border-radius:50%;filter:blur(130px);opacity:0.22;}
+    .o1{width:600px;height:600px;background:radial-gradient(circle,#0891b2,transparent);top:-200px;right:-150px;animation:ob 25s ease-in-out infinite;}
+    .o2{width:400px;height:400px;background:radial-gradient(circle,#4f46e5,transparent);bottom:0;left:-100px;animation:ob 22s ease-in-out infinite reverse;}
+    .grid-ov{position:absolute;inset:0;background-image:linear-gradient(rgba(6,182,212,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.025) 1px,transparent 1px);background-size:60px 60px;}
+    @keyframes ob{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,-80px)}}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:rgba(3,7,18,0.8);backdrop-filter:blur(24px);border-bottom:1px solid rgba(6,182,212,0.1);}
+    .nav-l{display:flex;align-items:center;gap:1rem;}
+    .back{display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:color 0.2s;padding:0.3rem 0.7rem;border-radius:6px;border:1px solid var(--border);}
+    .back:hover{color:var(--text);border-color:var(--ba);}
+    .nav-sep{color:var(--faint);}
+    .nav-subj{font-family:var(--mono);font-size:0.8rem;color:var(--accent);font-weight:500;}
+    .nav-r{display:flex;gap:0.65rem;}
+    .btn{padding:0.4rem 1rem;border-radius:7px;font-size:0.8rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:0.35rem;transition:all 0.2s;}
+    .btn-g{background:transparent;border:1px solid var(--border);color:var(--muted);}
+    .btn-g:hover{border-color:var(--ba);color:var(--text);background:rgba(6,182,212,0.08);}
+    .btn-p{background:var(--accent);color:#030712;font-weight:700;box-shadow:0 0 20px var(--glow);}
+    .btn-p:hover{background:var(--a2);box-shadow:0 0 35px var(--glow);transform:translateY(-1px);}
+
+    main{position:relative;z-index:10;padding-top:60px;}
+
+    .hero{padding:4.5rem 2rem 3.5rem;max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;}
+    .hero-tag{display:inline-flex;align-items:center;gap:0.45rem;padding:0.3rem 0.85rem;border-radius:100px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.25);font-family:var(--mono);font-size:0.7rem;color:var(--accent);margin-bottom:1rem;letter-spacing:0.06em;}
+    .pdot{width:6px;height:6px;border-radius:50%;background:var(--em);animation:pdot 2s ease-in-out infinite;}
+    @keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.6)}50%{box-shadow:0 0 0 5px rgba(16,185,129,0)}}
+    .hero-h{font-size:clamp(2.4rem,6vw,5rem);font-weight:900;letter-spacing:-0.03em;line-height:1.05;margin-bottom:0.75rem;}
+    .grad{background:linear-gradient(135deg,#06b6d4,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .hero-desc{font-size:1rem;color:var(--muted);line-height:1.75;max-width:520px;margin-bottom:2rem;}
+    .hero-stats{display:flex;gap:2.5rem;}
+    .hst-n{font-family:var(--mono);font-size:1.8rem;font-weight:800;color:var(--accent);display:block;}
+    .hst-l{font-size:0.72rem;color:var(--muted);}
+    .hero-badge{background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.18);border-radius:20px;padding:2.5rem 2rem;text-align:center;flex-shrink:0;min-width:160px;}
+    .big-ic{font-size:4rem;display:block;margin-bottom:0.75rem;}
+    .badge-lbl{font-family:var(--mono);font-size:0.7rem;color:var(--muted);line-height:1.6;}
+
+    .div{height:1px;background:linear-gradient(90deg,transparent,rgba(6,182,212,0.3),transparent);margin:0 2rem;}
+
+    .section{padding:3.5rem 2rem;max-width:1180px;margin:0 auto;}
+    .sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem;flex-wrap:wrap;gap:0.75rem;}
+    .sec-title{font-size:1.2rem;font-weight:700;display:flex;align-items:center;gap:0.6rem;}
+
+    /* TECH STACK TAGS */
+    .tech-row{display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:2rem;}
+    .tech-tag{display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;border-radius:100px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.2);font-family:var(--mono);font-size:0.72rem;color:var(--accent);transition:all 0.2s;}
+    .tech-tag:hover{background:rgba(6,182,212,0.15);border-color:var(--ba);}
+
+    /* PINNED */
+    .pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+    .pin{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;backdrop-filter:blur(20px);text-decoration:none;color:inherit;display:block;transition:all 0.3s;position:relative;overflow:hidden;}
+    .pin::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 60% at 0 0,rgba(6,182,212,0.1),transparent);opacity:0;transition:opacity 0.3s;}
+    .pin:hover{transform:translateY(-4px);border-color:var(--ba);box-shadow:0 16px 50px rgba(0,0,0,0.4);}
+    .pin:hover::before{opacity:1;}
+    .pin-ic{font-size:2rem;margin-bottom:0.9rem;display:block;}
+    .pin-title{font-size:0.95rem;font-weight:700;margin-bottom:0.4rem;}
+    .pin-desc{font-size:0.8rem;color:var(--muted);line-height:1.6;margin-bottom:1.25rem;}
+    .pin-go{font-size:0.78rem;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:0.3rem;transition:gap 0.2s;}
+    .pin:hover .pin-go{gap:0.55rem;}
+
+    /* MATERIALS */
+    .mat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0.9rem;}
+    .mat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem;text-decoration:none;color:inherit;display:flex;align-items:center;gap:0.9rem;transition:all 0.25s;}
+    .mat:hover{border-color:var(--ba);transform:translateX(5px);background:rgba(15,23,42,0.9);}
+    .mat-ic{font-size:1.4rem;flex-shrink:0;width:36px;text-align:center;}
+    .mat-nm{font-size:0.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .mat-tp{font-family:var(--mono);font-size:0.65rem;color:var(--faint);margin-top:0.12rem;}
+    .mat-arr{margin-left:auto;color:var(--muted);font-size:0.75rem;flex-shrink:0;transition:color 0.2s,transform 0.2s;}
+    .mat:hover .mat-arr{color:var(--accent);transform:translateX(4px);}
+
+    /* TERMINAL PREVIEW */
+    .term{background:#0d1117;border:1px solid rgba(6,182,212,0.18);border-radius:14px;overflow:hidden;font-family:var(--mono);transition:border-color 0.3s;}
+    .term:hover{border-color:rgba(6,182,212,0.4);}
+    .term-bar{padding:0.75rem 1.1rem;background:rgba(6,182,212,0.06);border-bottom:1px solid rgba(6,182,212,0.1);display:flex;align-items:center;gap:0.4rem;}
+    .tb{width:10px;height:10px;border-radius:50%;}
+    .tb-r{background:#ff5f57;}.tb-y{background:#febc2e;}.tb-g{background:#28c840;}
+    .term-ttl{font-size:0.7rem;color:var(--faint);margin-left:0.5rem;}
+    .term-body{padding:1.25rem;font-size:0.8rem;line-height:1.85;}
+    .tp{color:var(--em);}.to{color:var(--muted);}.tv{color:#f0f6fc;}
+    .tc2{color:#6a737d;}.tk2{color:#ff7b72;}.ts2{color:#a5d6ff;}
+    .tcyan{color:var(--accent);}
+
+    footer{border-top:1px solid rgba(6,182,212,0.1);padding:2.5rem 2rem;max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .fb{font-family:var(--mono);font-size:0.78rem;color:var(--faint);}
+    .fb b{color:var(--accent);}
+    .fl{display:flex;gap:1.5rem;}
+    .fl a{font-size:0.78rem;color:var(--faint);text-decoration:none;transition:color 0.2s;}
+    .fl a:hover{color:var(--text);}
+
+    .rv{opacity:0;transform:translateY(22px);transition:opacity 0.55s ease,transform 0.55s ease;}
+    .rv.in{opacity:1;transform:translateY(0);}
+    .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+
+    @media(max-width:768px){
+      nav{padding:0 1rem;} .nav-subj{display:none;}
+      .hero{grid-template-columns:1fr;} .hero-badge{display:none;}
+      .pin-grid{grid-template-columns:1fr;}
+      .two-col{grid-template-columns:1fr;}
+      .section{padding:2.5rem 1.25rem;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="grid-ov"></div>
+</div>
+
+<nav>
+  <div class="nav-l">
+    <a href="https://spsitknm.github.io" class="back">← Hub</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-subj">SXG — SMART Technológie</span>
+  </div>
+  <div class="nav-r">
+    <a href="https://discord.gg/eSQDsna4d7/" target="_blank" class="btn btn-g">⌘ Discord</a>
+    <a href="https://github.com/SPSITKNM/SXG" target="_blank" class="btn btn-p">GitHub →</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="hero">
+    <div>
+      <div class="hero-tag">
+        <span class="pdot"></span>
+        🖥️ &nbsp;SXG — SMART Technológie &nbsp;·&nbsp; 4. ročník
+      </div>
+      <h1 class="hero-h">
+        Systémy.<br>
+        <span class="grad">Infraštruktúra.</span><br>
+        DevOps.
+      </h1>
+      <p class="hero-desc">
+        Linux, Docker, KVM, Git, OpenTelemetry — materiály k predmetu SMART technológie.
+        Praktické zručnosti pre modernú IT prevádzku.
+      </p>
+      <div class="hero-stats">
+        <div>
+          <span class="hst-n">10</span>
+          <div class="hst-l">Dokumentov</div>
+        </div>
+        <div>
+          <span class="hst-n">🐧</span>
+          <div class="hst-l">Linux first</div>
+        </div>
+        <div>
+          <span class="hst-n">4.</span>
+          <div class="hst-l">Ročník</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-badge">
+      <span class="big-ic">🖥️</span>
+      <div class="badge-lbl">SXG<br>SPSITKNM<br>2024–25</div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-title">🛠️ Tech Stack predmetu</div>
+    </div>
+    <div class="tech-row rv">
+      <span class="tech-tag">🐧 Linux / Fedora</span>
+      <span class="tech-tag">🐳 Docker</span>
+      <span class="tech-tag">🔀 Git & GitLab</span>
+      <span class="tech-tag">⚙️ KVM</span>
+      <span class="tech-tag">📦 VirtualBox</span>
+      <span class="tech-tag">📡 OpenTelemetry</span>
+      <span class="tech-tag">🔨 Makefile</span>
+      <span class="tech-tag">🖥️ QEMU</span>
+    </div>
+  </div>
+
+  <!-- RÝCHLY PRÍSTUP -->
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-title">📌 Rýchly prístup</div>
+    </div>
+    <div class="pin-grid">
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/docker.md" target="_blank" class="pin rv">
+        <span class="pin-ic">🐳</span>
+        <div class="pin-title">Docker</div>
+        <p class="pin-desc">Architektúra Dockeru, imagy, kontajnery, volumes a CLI príkazy.</p>
+        <div class="pin-go">Otvoriť →</div>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/git_github_gitlab.md" target="_blank" class="pin rv d1">
+        <span class="pin-ic">🔀</span>
+        <div class="pin-title">Git & GitLab</div>
+        <p class="pin-desc">Verzionovanie kódu, vetvy, merge requesty, CI/CD základy.</p>
+        <div class="pin-go">Otvoriť →</div>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/Linux%20Commands%20Cheat%20Sheet.md" target="_blank" class="pin rv d2">
+        <span class="pin-ic">💻</span>
+        <div class="pin-title">Linux Commands</div>
+        <p class="pin-desc">Cheat sheet Linux príkazov — procesy, súbory, sieť a systém.</p>
+        <div class="pin-go">Otvoriť →</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- TERMINAL PREVIEW -->
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-title">🖥️ Ukážky z hodín</div>
+    </div>
+    <div class="two-col">
+      <div class="term rv">
+        <div class="term-bar">
+          <div class="tb tb-r"></div><div class="tb tb-y"></div><div class="tb tb-g"></div>
+          <span class="term-ttl">Docker — základné príkazy</span>
+        </div>
+        <div class="term-body">
+<span class="tc2"># Stiahnutie a spustenie kontajnera</span><br>
+<span class="tp">$</span> <span class="tv">docker pull nginx:alpine</span><br>
+<span class="tp">$</span> <span class="tv">docker run -d -p 80:80 nginx</span><br><br>
+<span class="tc2"># Výpis bežiacich kontajnerov</span><br>
+<span class="tp">$</span> <span class="tv">docker ps</span><br>
+<span class="to">CONTAINER ID  IMAGE    STATUS</span><br>
+<span class="to">a1b2c3d4e5f6  nginx    Up 2h</span><br><br>
+<span class="tc2"># Build vlastného image</span><br>
+<span class="tp">$</span> <span class="tv">docker build -t myapp .</span><br>
+<span class="tp">$</span> <span class="tv">docker compose up -d</span>
+        </div>
+      </div>
+      <div class="term rv d1">
+        <div class="term-bar">
+          <div class="tb tb-r"></div><div class="tb tb-y"></div><div class="tb tb-g"></div>
+          <span class="term-ttl">KVM — validácia virtualizácie</span>
+        </div>
+        <div class="term-body">
+<span class="tc2"># Overenie podpory CPU</span><br>
+<span class="tp">$</span> <span class="tv">lscpu | grep -i virtualization</span><br>
+<span class="to">Virtualization: VT-x</span><br><br>
+<span class="tc2"># Kontrola KVM modulov</span><br>
+<span class="tp">$</span> <span class="tv">lsmod | grep kvm</span><br>
+<span class="to">kvm_intel   380928  0</span><br>
+<span class="to">kvm         1089536 1 kvm_intel</span><br><br>
+<span class="tc2"># Validácia QEMU hosta</span><br>
+<span class="tp">$</span> <span class="tv">sudo virt-host-validate qemu</span><br>
+<span class="to">QEMU: Checking for hardware virt  : PASS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VŠETKY MATERIÁLY -->
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-title">📂 Všetky materiály</div>
+    </div>
+    <div class="mat-grid">
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/Uvod_do_operacnych_systemov.md" target="_blank" class="mat rv">
+        <span class="mat-ic">🖥️</span>
+        <div><div class="mat-nm">Úvod do operačných systémov</div><div class="mat-tp">Uvod_do_operacnych_systemov.md</div></div>
+        <span class="mat-arr">→</span>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/Linux%20Commands%20Cheat%20Sheet.md" target="_blank" class="mat rv d1">
+        <span class="mat-ic">💻</span>
+        <div><div class="mat-nm">Linux Commands Cheat Sheet</div><div class="mat-tp">Linux Commands Cheat Sheet.md</div></div>
+        <span class="mat-arr">→</span>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/fedora_commands.md" target="_blank" class="mat rv d2">
+        <span class="mat-ic">🐧</span>
+        <div><div class="mat-nm">Fedora Commands</div><div class="mat-tp">fedora_commands.md</div></div>
+        <span class="mat-arr">→</span>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/git_github_gitlab.md" target="_blank" class="mat rv">
+        <span class="mat-ic">🔀</span>
+        <div><div class="mat-nm">Git, GitHub & GitLab</div><div class="mat-tp">git_github_gitlab.md</div></div>
+        <span class="mat-arr">→</span>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/docker.md" target="_blank" class="mat rv d1">
+        <span class="mat-ic">🐳</span>
+        <div><div class="mat-nm">Docker</div><div class="mat-tp">docker.md</div></div>
+        <span class="mat-arr">→</span>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/kvm.md" target="_blank" class="mat rv d2">
+        <span class="mat-ic">⚙️</span>
+        <div><div class="mat-nm">KVM Virtualizácia</div><div class="mat-tp">kvm.md</div></div>
+        <span class="mat-arr">→</span>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/otel.md" target="_blank" class="mat rv">
+        <span class="mat-ic">📡</span>
+        <div><div class="mat-nm">OpenTelemetry & Observabilita</div><div class="mat-tp">otel.md</div></div>
+        <span class="mat-arr">→</span>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/VirtualBox%20Guide.md" target="_blank" class="mat rv d1">
+        <span class="mat-ic">📦</span>
+        <div><div class="mat-nm">VirtualBox Guide</div><div class="mat-tp">VirtualBox Guide.md</div></div>
+        <span class="mat-arr">→</span>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/Makefile.md" target="_blank" class="mat rv d2">
+        <span class="mat-ic">🔨</span>
+        <div><div class="mat-nm">Makefile</div><div class="mat-tp">Makefile.md</div></div>
+        <span class="mat-arr">→</span>
+      </a>
+      <a href="https://github.com/SPSITKNM/SXG/blob/main/tips_and_tricks" target="_blank" class="mat rv">
+        <span class="mat-ic">💡</span>
+        <div><div class="mat-nm">Tips & Tricks</div><div class="mat-tp">tips_and_tricks</div></div>
+        <span class="mat-arr">→</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="fb"><b>SXG — SMART Technológie</b> · SPSITKNM · Tomaš Mucha</div>
+  <div class="fl">
+    <a href="https://spsitknm.github.io">← Hub</a>
+    <a href="https://discord.gg/eSQDsna4d7/" target="_blank">Discord</a>
+    <a href="https://github.com/SPSITKNM/SXG" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){e.target.classList.add('in'); obs.unobserve(e.target);}
+}), {threshold:0.06});
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.background =
+    window.scrollY > 10 ? 'rgba(3,7,18,0.96)' : 'rgba(3,7,18,0.8)';
+});
+</script>
+</body>
+</html>
