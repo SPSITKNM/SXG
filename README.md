@@ -1,3 +1,11 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)"  srcset="assets/banner-sxg-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="assets/banner-sxg-light.png">
+    <img alt="SXG — SMART technológie · spsitknm.github.io" src="assets/banner-sxg-light.png" width="900">
+  </picture>
+</p>
+
 # SXG — SMART technológie
 
 Repozitár predmetu **SXG** na SPŠ IT Kysucké Nové Mesto (4. ročník). Materiály k Linuxu,

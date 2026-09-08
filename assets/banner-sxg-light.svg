@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="SXG — SMART technológie · spsitknm.github.io">
+  <rect width="1280" height="320" fill="#f6f3ec"></rect>
+  <path d="M-20,300 C70,284 130,314 230,296 C330,278 390,310 490,292 C590,274 650,306 750,288 C850,270 910,302 1010,284 C1110,266 1180,298 1300,278" fill="none" stroke="#ded6c6" stroke-width="1"></path>
+  <path d="M-20,276 C70,260 130,290 230,272 C330,254 390,286 490,268 C590,250 650,282 750,264 C850,246 910,278 1010,260 C1110,242 1180,274 1300,254" fill="none" stroke="#ded6c6" stroke-width="1"></path>
+  <path d="M-20,252 C70,236 130,266 230,248 C330,230 390,262 490,244 C590,226 650,258 750,240 C850,222 910,254 1010,236 C1110,218 1180,250 1300,230" fill="none" stroke="#bcb2a0" stroke-width="1"></path>
+  <path d="M-20,228 C70,212 130,242 230,224 C330,206 390,238 490,220 C590,202 650,234 750,216 C850,198 910,230 1010,212 C1110,194 1180,226 1300,206" fill="none" stroke="#ded6c6" stroke-width="1"></path>
+  <path d="M-20,204 C70,188 130,218 230,200 C330,182 390,214 490,196 C590,178 650,210 750,192 C850,174 910,206 1010,188 C1110,170 1180,202 1300,182" fill="none" stroke="#ded6c6" stroke-width="1"></path>
+  <path d="M-20,180 C70,164 130,194 230,176 C330,158 390,190 490,172 C590,154 650,186 750,168 C850,150 910,182 1010,164 C1110,146 1180,178 1300,158" fill="none" stroke="#0e7490" stroke-width="1.4" opacity="0.9"></path>
+  <path d="M-20,156 C70,140 130,170 230,152 C330,134 390,166 490,148 C590,130 650,162 750,144 C850,126 910,158 1010,140 C1110,122 1180,154 1300,134" fill="none" stroke="#ded6c6" stroke-width="1"></path>
+  <path d="M-20,132 C70,116 130,146 230,128 C330,110 390,142 490,124 C590,106 650,138 750,120 C850,102 910,134 1010,116 C1110,98 1180,130 1300,110" fill="none" stroke="#ded6c6" stroke-width="1"></path>
+  <path d="M-20,108 C70,92 130,122 230,104 C330,86 390,118 490,100 C590,82 650,114 750,96 C850,78 910,110 1010,92 C1110,74 1180,106 1300,86" fill="none" stroke="#ded6c6" stroke-width="1"></path>
+  <path d="M-20,84 C70,68 130,98 230,80 C330,62 390,94 490,76 C590,58 650,90 750,72 C850,54 910,86 1010,68 C1110,50 1180,82 1300,62" fill="none" stroke="#ded6c6" stroke-width="1"></path>
+  <text x="56" y="152" font-family="'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace" font-weight="500" font-size="13" letter-spacing="2.1" fill="#5b6167">SPŠ IT KYSUCKÉ NOVÉ MESTO · 4. ROČNÍK</text>
+  <text x="56" y="222" font-family="Newsreader,ui-serif,Georgia,'Times New Roman',serif" font-weight="400" font-size="72" letter-spacing="-1.4" fill="#17191a">SMART technológie</text>
+  <text x="56" y="256" font-family="'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#4c5257">Linux · Docker · virtualizácia · observabilita</text>
+  <text x="56" y="296" font-family="'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace" font-size="13" fill="#5b6167">spsitknm.github.io/predmet.html?s=sxg</text>
+</svg>
