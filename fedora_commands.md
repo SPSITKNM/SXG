@@ -1,6 +1,6 @@
-# 🐧 Linux (Fedora) – Príkazový riadok Cheatsheet
+# Linux (Fedora) – Príkazový riadok Cheatsheet
 
-## 📁 Navigácia v systéme
+## Navigácia v systéme
 
 ```
 pwd = printne aktuálny adresár 
@@ -12,7 +12,7 @@ cd = návrat do domáceho adresára
 clear = vyčisti terminál 
 ```
 
-## 🗃️ Práca so súbormi
+## Práca so súbormi
 
 ```
 touch sobor.txt = vytvorí prázdny súbor / textak
@@ -23,7 +23,7 @@ mv zdroj ciel = premiestni premenuje
 cat subor.txt = vypíše obsah
 ```
 
-## 🔐 Práva a vlastníctvo
+## Práva a vlastníctvo
 
 ```
 chmod = change mode 
@@ -32,7 +32,7 @@ chmod +x skript.sh == pridá spustiteľné právo
 chmod 755 subor 
 ```
 
-## 📦 Správa balíčkov (Fedora – DNF)
+## Správa balíčkov (Fedora – DNF)
 
 ```
 sudo dnf update = aktualizácia systemu 
@@ -42,14 +42,14 @@ dnf search nazov = hladanie balíčka
 dnf list installed = zoznam nainštalovanych balíčkov 
 ```
 
-## 💽 Správa diskov a systém
+## Správa diskov a systém
 
 ```
 df -h = vyuzitie diskov 
 du -sh * = velkost suborov a priečinkov 
 ```
 
-## 👤 Používatelia a práva
+## Používatelia a práva
 
 ```
 whoami = aktualny user 
@@ -59,14 +59,14 @@ adduser meno = vytvorenie noveho usera
 passwd meno = zmena hesla usera 
 ```
 
-## 🌐 Sieť a internet
+## Sieť a internet
 
 ```
 ip a = zobrazenie ip adries 
 ss -tuln 
 ```
 
-## 🐳 Základ Docker príkazov
+## Základ Docker príkazov
 
 ```
 docker ps -a = zoznam kontajnerov 

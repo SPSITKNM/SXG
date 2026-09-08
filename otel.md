@@ -1,7 +1,7 @@
 
-# 📡 Observability & OpenTelemetry – Študijné poznámky
+# Observability & OpenTelemetry – Študijné poznámky
 
-## 🧠 Observability – Čo to je?
+## Observability – Čo to je?
 **Observability** je schopnosť **sledovať a porozumieť vnútornej činnosti systému** na základe jeho **výstupných dát**.
 
 - Umožňuje efektívne **monitorovanie, troubleshooting a optimalizáciu**.
@@ -12,24 +12,24 @@
 
 ---
 
-## 📌 1. Traces – Stopy
+## 1. Traces – Stopy
 
 - **Traces** sú dáta, ktoré zaznamenávajú **tok jednotlivých požiadaviek** naprieč systémami.
 - Skladajú sa z viacerých častí nazývaných **spany**:
   - Každý **span** predstavuje jeden krok (napr. API volanie, DB dotaz, interná logika).
 
-🔄 **Príklad**:
+**Príklad**:
 Používateľ zadá objednávku → front-end → objednávkový mikroservis → platobná brána → databáza → e-mail.
 
 - Každý krok = jeden **span**
 - Celý tok = jeden **trace**
 
-### ✨ Distribuované Traces
+### Distribuované Traces
 - Umožňujú sledovať požiadavku, ktorá prechádza **cez viacero služieb** v rámci distribuovaného systému.
 
 ---
 
-## 📌 2. Metrics – Metriky
+## 2. Metrics – Metriky
 
 - **Metriky** sú **kvantitatívne merania** o správaní systému počas jeho behu.
 - Príklady:
@@ -37,19 +37,19 @@ Používateľ zadá objednávku → front-end → objednávkový mikroservis →
   - Počet požiadaviek za sekundu
   - Využitie CPU, pamäte
 
-### 🔔 Metric Event
+### Metric Event
 - **Udalostná situácia**, ktorá spôsobí **zmenu alebo aktualizáciu metrík**.
 
-### 🎛️ Metric Instruments
+### Metric Instruments
 - Nástroje SDK na meranie:
   - `Counter`, `UpDownCounter`, `Histogram`, `ObservableGauge`
 
-### 📤 Metric Exporter
+### Metric Exporter
 - Komponent, ktorý **exportuje metrické údaje** do nástroja na analýzu (napr. Prometheus, Datadog).
 
 ---
 
-## 📌 3. Logs – Logy
+## 3. Logs – Logy
 
 - **Textové záznamy udalostí**, ktoré nastali počas behu aplikácie.
 - Môžu byť štruktúrované alebo neštruktúrované.
@@ -57,45 +57,45 @@ Používateľ zadá objednávku → front-end → objednávkový mikroservis →
 
 ---
 
-## 🔄 Metrics & Reliability
+## Metrics & Reliability
 
 - Metriky poskytujú **kvantitatívne podklady** na hodnotenie **spoľahlivosti systému** (dostupnosť, odozva, chybovosť).
 
 ---
 
-# 🔁 Signals v OpenTelemetry
+# Signals v OpenTelemetry
 
-## 🎯 Čo sú „signals“?
+## Čo sú „signals“?
 **Signals** sú typy **telemetrických dát**, ktoré OpenTelemetry zbiera z aplikácií alebo systémov.
 
-## 🧩 Typy signalov:
+## Typy signalov:
 - **Traces** – cesta požiadavky, prehľad výkonnosti, latencie, chýb
 - **Metrics** – merania o správaní systému v čase
 - **Logs** – záznamy o konkrétnych udalostiach počas behu
 
 ---
 
-# 🛠️ Instrumentation (Inštrumentácia)
+# Instrumentation (Inštrumentácia)
 
 **Inštrumentácia** je proces, ktorým do aplikácie vkladáme **kód alebo nástroje** na zber telemetrických dát (traces, metrics, logs).
 
-## 🔧 Typy inštrumentácie:
+## Typy inštrumentácie:
 
-### ⚙️ Zero-code / Auto-instrumentation
+### Zero-code / Auto-instrumentation
 - Automatická inštrumentácia bez úprav zdrojového kódu
 - Aktivuje sa cez agenta (napr. `opentelemetry-instrument`)
 
-### 👨‍💻 Code-based / Manual instrumentation
+### Code-based / Manual instrumentation
 - Ručné vkladanie kódu do aplikácie
 - Používateľ má plnú kontrolu nad tým, čo a ako sa zaznamenáva
 
-### 📚 Libraries / Instrumented Libraries
+### Libraries / Instrumented Libraries
 - Predpripravené knižnice s OpenTelemetry hookmi
 - Príklad: `opentelemetry-instrumentation-flask`, `requests`, `express`
 
 ---
 
-## 🧠 Summary
+## Summary
 
 | Pilar      | Popis                                                  |
 |------------|---------------------------------------------------------|

@@ -93,7 +93,7 @@ docker run -p <host_port>:<container_port> <image>
 
 # Docker: Rozdiel medzi `docker run`, `docker images` a `docker start`
 
-## 🔹 docker run
+## docker run
 
 - **Vytvára a spúšťa nový kontajner** na základe daného imagu.
 - Ak image nie je lokálne, automaticky sa stiahne z Docker Hubu.
@@ -108,11 +108,11 @@ docker run -p <host_port>:<container_port> <image>
 ```bash
 docker run -d -p 8080:80 --name webserver nginx
 ```
-➡️ Vytvorí a spustí nový kontajner `webserver` z imagu `nginx`.
+Vytvorí a spustí nový kontajner `webserver` z imagu `nginx`.
 
 ---
 
-## 🔹 docker images
+## docker images
 
 - **Zobrazí zoznam všetkých imagov**, ktoré sú uložené lokálne.
 - Nepretraktuje kontajnery, len samotné imagy (blueprinty).
@@ -131,7 +131,7 @@ nginx        latest    abc123def456   2 weeks ago     133MB
 
 ---
 
-## 🔹 docker start
+## docker start
 
 - **Spúšťa už existujúci kontajner**, ktorý bol predtým vytvorený cez `docker run`.
 - Zachová všetky pôvodné atribúty kontajnera (porty, mounty, názvy...).
@@ -149,7 +149,7 @@ docker start -ai webserver
 
 ---
 
-## 🧠 Zhrnutie:
+## Zhrnutie:
 
 | Príkaz         | Význam |
 |----------------|--------|
@@ -158,7 +158,7 @@ docker start -ai webserver
 | `docker start` | Spustí **už existujúci** (zastavený) kontajner |
 - **Docker Engine** = kuchár, ktorý varí podľa receptu
 
-## 🧩 Príkazy
+## Príkazy
 
 ### Spustenie Shellu v kontajneri
 ```bash
@@ -176,7 +176,7 @@ printenv
 
 ---
 
-## 🚀 `docker run`
+## `docker run`
 
 - Vytvorí a spustí nový kontajner zo zadaného imagu
 - Príklad:
@@ -188,7 +188,7 @@ docker run -d -p 27017:27017 mongo
 
 ---
 
-## 🌐 Docker Networks
+## Docker Networks
 
 - Docker automaticky vytvára izolované siete
 - Kontajnery v tej istej sieti spolu komunikujú cez **meno kontajnera**, nepotrebujú `localhost` ani port
@@ -204,7 +204,7 @@ docker network create <nazov_siete>
 
 ---
 
-## ⚙️ Docker Compose vs Docker Run
+## Docker Compose vs Docker Run
 
 | Docker Compose                         | Docker Run                             |
 |---------------------------------------|----------------------------------------|
@@ -217,7 +217,7 @@ docker compose version
 
 ---
 
-## 📝 Zhrnutie
+## Zhrnutie
 
 - `docker exec -it`: interaktívny prístup ku kontajneru
 - `docker run`: spustenie kontajnera s parametrami
@@ -225,14 +225,14 @@ docker compose version
 - Docker Compose: YAML-based orchestrácia kontajnerov
 
 
-# 🐳 Docker + Flask + Compose – praktický prehľad a koncepty
+# Docker + Flask + Compose – praktický prehľad a koncepty
 
-## 🧠 Základná myšlienka
+## Základná myšlienka
 JavaScript aplikácia alebo Flask backend sa pripája na databázu, zobrazí údaje a následne sa všetko kontajnerizuje cez `Dockerfile` a spustí pomocou `docker compose`.
 
 ---
 
-## 📦 Docker Compose – Prečo?
+## Docker Compose – Prečo?
 
 - **Lokálny vývoj**
 - **Demo open-source projektov**
@@ -240,24 +240,24 @@ JavaScript aplikácia alebo Flask backend sa pripája na databázu, zobrazí úd
 
 ---
 
-## 🔐 Environmentálne premenne vs Secrets
+## Environmentálne premenne vs Secrets
 
 - **Nevýhoda env premenných:** bezpečnostné riziko (napr. pri logovaní alebo výpisoch)
 - **Docker secrets:** oddelený mechanizmus na bezpečné ukladanie citlivých údajov
 
 ---
 
-## ⚙️ Override projektu v Compose
+## Override projektu v Compose
 
 ```bash
 docker compose --project-name projects -f mongo-services.yaml up -d
 ```
 
-➡️ Prepíše predvolený názov projektu
+Prepíše predvolený názov projektu
 
 ---
 
-## 🧾 JSON vs YAML
+## JSON vs YAML
 
 - `.json` = **key-value** formát, kde kľúč MUSÍ byť v úvodzovkách
 ```json
@@ -272,7 +272,7 @@ docker compose --project-name projects -f mongo-services.yaml up -d
 
 ---
 
-## 🗂️ Flask aplikácia – základ
+## Flask aplikácia – základ
 
 ```bash
 python -m venv .venv
@@ -286,13 +286,13 @@ pip freeze > requirements.txt
 
 ---
 
-## 🛰️ Testovanie lokálne
+## Testovanie lokálne
 
 ```bash
 curl 127.0.0.1:5000/about
 ```
 
-➡️ Dostaneme späť hardkodovanú verziu z `Flask` aplikácie
+Dostaneme späť hardkodovanú verziu z `Flask` aplikácie
 
 ```bash
 flask --app app run
@@ -303,7 +303,7 @@ flask --app app run
 
 ---
 
-## 🐳 Dockerfile – Ako vyzerá?
+## Dockerfile – Ako vyzerá?
 
 ```dockerfile
 FROM python:3.12.4-alpine3.20
@@ -326,7 +326,7 @@ CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
 
 ---
 
-## 🧱 VM vs Container
+## VM vs Container
 
 | Vlastnosť             | VM                    | Container              |
 |------------------------|-----------------------|------------------------|
@@ -339,7 +339,7 @@ CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
 
 ---
 
-## 🧪 Debugging
+## Debugging
 
 ```bash
 docker exec -it <container_id> /bin/bash
@@ -347,7 +347,7 @@ docker exec -it <container_id> /bin/bash
 
 ---
 
-## 📅 Fun facts
+## Fun facts
 
 - `docker-compose`: vznikol v **2014**
 - `docker-compose v2`: **2020**
@@ -355,7 +355,7 @@ docker exec -it <container_id> /bin/bash
 
 ---
 
-## 🔁 Vývojový cyklus v Dockeri
+## Vývojový cyklus v Dockeri
 
 1. Vytvorenie aplikácie (napr. Flask, JS)
 2. Príprava `Dockerfile`
@@ -367,25 +367,25 @@ docker exec -it <container_id> /bin/bash
 ---
 
 
-# 🐳 Docker – Od Aplikácie po Kontajner
+# Docker – Od Aplikácie po Kontajner
 
 Tento materiál vysvetľuje rozdiely medzi Dockerfile a Compose súborom, krok po kroku od vytvorenia aplikácie až po jej spustenie ako kontajner.
 
 ---
 
-## 🧱 1. Vytvorenie vlastnej aplikácie
+## 1. Vytvorenie vlastnej aplikácie
 
 Najprv si vytváraš vlastnú aplikáciu – napríklad Flask API, Node.js server, Ruby Sinatra app alebo Java Spring Boot.  
 Toto je obyčajný kód, ktorý funguje aj mimo Dockera.
 
 ---
 
-## 📦 2. Dockerfile – ako vytvoriť *image* z aplikácie
+## 2. Dockerfile – ako vytvoriť *image* z aplikácie
 
 **Dockerfile** je inštrukčný súbor, ktorý hovorí Dockeru, **ako z tvojej aplikácie vytvoriť image**.  
 Tento image obsahuje všetko potrebné na spustenie: kód, runtime, knižnice a konfigurácie.
 
-### 🔧 Príklad `Dockerfile`:
+### Príklad `Dockerfile`:
 ```Dockerfile
 FROM python:3.12-alpine
 WORKDIR /app
@@ -399,19 +399,19 @@ CMD ["python", "app.py"]
 - `RUN` – inštaluje závislosti
 - `CMD` – spustí aplikáciu
 
-👉 **Výsledok:** Image s tvojou appkou pripravený na spustenie.
+**Výsledok:** Image s tvojou appkou pripravený na spustenie.
 
 ---
 
-## ⚙️ 3. docker-compose.yaml – ako spustiť *container* z image-u
+## 3. docker-compose.yaml – ako spustiť *container* z image-u
 
 `docker-compose.yaml` je súbor, ktorý definuje **ako spustiť tvoju aplikáciu ako kontajner** (alebo viacero kontajnerov – napr. appka + databáza).
 
-### 🧩 Rozdiel oproti Dockerfile:
+### Rozdiel oproti Dockerfile:
 - **Dockerfile** = *ako postaviť image*
 - **Compose file** = *ako spustiť kontajner(y)* z image + prepojiť ich
 
-### 🔧 Príklad `docker-compose.yaml`:
+### Príklad `docker-compose.yaml`:
 ```yaml
 version: "3"
 services:
@@ -431,7 +431,7 @@ services:
 
 ---
 
-## 🧠 Zhrnutie
+## Zhrnutie
 
 | Krok | Súbor | Úloha |
 |------|-------|--------|
@@ -441,13 +441,13 @@ services:
 
 ---
 
-💡 **Poznámka:** Docker Compose umožňuje ľahko definovať viacero služieb, ich sieťovanie, premenné prostredia a persistentné volume.
+**Poznámka:** Docker Compose umožňuje ľahko definovať viacero služieb, ich sieťovanie, premenné prostredia a persistentné volume.
 
 ---
 
-# 🔄 Bind Mount vs Docker Volume
+# Bind Mount vs Docker Volume
 
-## 🗂️ Bind Mount
+## Bind Mount
 
 ```yaml
 volumes:
@@ -457,17 +457,17 @@ volumes:
 - `./mydata` je konkrétny priečinok **na hostiteľskom počítači**
 - Čokoľvek zapíše PostgreSQL do `/var/lib/postgresql/data` sa **fyzicky objaví** v `./mydata` na hostovi
 
-### ✅ Výhody:
+### Výhody:
 - Máš **plnú kontrolu nad súbormi**
 - Môžeš do priečinka **vstupovať priamo z host systému**
 
-### ⚠️ Nevýhody:
+### Nevýhody:
 - Závisí od **presnej štruktúry cesty**
 - Môže nastať problém pri **migrácii na iný systém alebo tím**
 
 ---
 
-## 📦 Docker Volume
+## Docker Volume
 
 ```yaml
 volumes:
@@ -484,25 +484,25 @@ volumes:
   ```
   ale ty túto cestu **nešpecifikuješ priamo**
 
-### ✅ Výhody:
+### Výhody:
 - **Bezpečne prenosné**
 - Docker sa stará o celý **životný cyklus (lifecycle)**: zálohy, obnovy, mazanie
 - Vhodné pre **produkciu**
 
-### ⚠️ Nevýhody:
+### Nevýhody:
 - **Nemáš jednoduchý priamy prístup** k dátam mimo kontajnera
 
 ---
 
-## 📝 Zhrnutie:
+## Zhrnutie:
 | Typ             | Prístup k dátam | Prenositeľnosť | Vhodné pre      |
 |------------------|------------------|------------------|------------------|
 | Bind Mount       | Priamy           | Nižšia           | Vývoj, ladenie   |
 | Docker Volume    | Nepriamy (cez Docker) | Vysoká     | Produkcia        |
 
-# 🐳 Docker Compose Setup with Flask, PostgreSQL and NGINX
+# Docker Compose Setup with Flask, PostgreSQL and NGINX
 
-## 📦 Package Snapshot
+## Package Snapshot
 
 To capture the current Python environment:
 ```bash
@@ -511,21 +511,21 @@ pip freeze > requirements.txt
 
 ---
 
-## 🧱 Services Overview
+## Services Overview
 
-### 🔁 Postgres
+### Postgres
 - Acts as the backend database.
 - Secrets are used to inject the password securely.
 - Attached to the **private** network.
 
-### 🌐 NGINX
+### NGINX
 - Acts as a **reverse proxy** or **load balancer**.
 - Exposed on port `8080`.
 - Uses a custom config from the `nginx_config`.
 - Attached to **public** network.
 - Uses **health check dependency** for Flask container (`condition: service_healthy`).
 
-### ⚙️ Flask
+### Flask
 - Main web application.
 - Built from `Dockerfile.dev` inside `./flask` directory.
 - Uses env vars, bind mounts, secrets, configs.
@@ -534,7 +534,7 @@ pip freeze > requirements.txt
 
 ---
 
-## 🚫 Depends On – Static Dependency Warning
+## Depends On – Static Dependency Warning
 
 It’s not ideal to statically assume:
 ```yaml
@@ -555,7 +555,7 @@ Flask has a **30s timeout** while waiting for DB, so using `healthcheck` is more
 
 ---
 
-## 🔐 Network Isolation Strategy
+## Network Isolation Strategy
 
 - NGINX is on **public** network → exposed to internet.
 - Flask and PostgreSQL are on **private** network → hidden and secured.
@@ -563,7 +563,7 @@ Flask has a **30s timeout** while waiting for DB, so using `healthcheck` is more
 
 ---
 
-## ✅ Healthcheck Configuration
+## Healthcheck Configuration
 
 Example for Flask:
 ```yaml
@@ -581,7 +581,7 @@ healthcheck:
 
 ---
 
-## 🧪 Testing Internal Networking (SSH into container)
+## Testing Internal Networking (SSH into container)
 
 ```bash
 docker exec -it <container_name> sh
@@ -600,13 +600,13 @@ nc -vz flask 8000
 
 ---
 
-## 🔐 NGINX + Let’s Encrypt (TLS)
+## NGINX + Let’s Encrypt (TLS)
 
-> 🔐 Secure NGINX setup using Let's Encrypt is recommended for HTTPS.
+> Secure NGINX setup using Let's Encrypt is recommended for HTTPS.
 
 ---
 
-## 🧾 Docker Compose Snippet
+## Docker Compose Snippet
 
 ```yaml
 services:
@@ -705,21 +705,21 @@ networks:
 
 # Load Balancing Algorithms
 
-## 🔍 Purpose
+## Purpose
 Load balancers help distribute incoming traffic across multiple servers to **prevent any single server from becoming overloaded**.
 
 ---
 
-## ⚙️ Static Load Balancing Algorithms
+## Static Load Balancing Algorithms
 
 These algorithms **ignore the state** of any particular server (e.g., CPU usage, load, or current connections).  
 They follow **fixed rules** and are **independent of real-time server performance**.
 
-### ✅ Advantages
+### Advantages
 - Simple and efficient to implement
 - Require no monitoring of server state
 
-### 📘 Common Static Algorithms
+### Common Static Algorithms
 
 #### 1. Round Robin
 Each incoming request is assigned to the next server in a cyclic order.
@@ -758,11 +758,11 @@ Does not follow any pattern.
 
 ---
 
-## 🔄 Dynamic Load Balancing Algorithms
+## Dynamic Load Balancing Algorithms
 
 These algorithms consider the **current state of the servers** before making a routing decision.
 
-### 📘 Common Dynamic Algorithms
+### Common Dynamic Algorithms
 
 #### 1. Least Connection
 Directs the request to the server with the **fewest active connections**.
@@ -776,29 +776,29 @@ Uses real-time metrics like:
 - Memory load
 - Network/disk I/O
 
-🔧 Requires a **special monitoring agent** on each server.
+Requires a **special monitoring agent** on each server.
 
 Best used when requests **require varying amounts of resources**.
 
 ---
 
-## 🩺 Health Checks
+## Health Checks
 Most load balancers include **health checks**.  
 If a server fails the health check, it is temporarily removed from rotation.
 
 ---
 
-## 🧠 Summary
+## Summary
 
 | Algorithm                | Type     | State-Aware | Notes                              |
 |--------------------------|----------|-------------|------------------------------------|
-| Round Robin              | Static   | ❌          | Cycles requests evenly             |
-| Weighted Round Robin     | Static   | ❌          | Manual weights for stronger nodes |
-| IP/URL/Five Tuple Hash   | Static   | ❌          | Consistent request routing         |
-| Random                   | Static   | ❌          | Unpredictable but simple           |
-| Least Connection         | Dynamic  | ✅          | Chooses least busy server          |
-| Weighted Least Connection| Dynamic  | ✅          | Considers server power             |
-| Resource-Based           | Dynamic  | ✅          | Monitors real-time load            |
+| Round Robin | Static | | Cycles requests evenly |
+| Weighted Round Robin | Static | | Manual weights for stronger nodes |
+| IP/URL/Five Tuple Hash | Static | | Consistent request routing |
+| Random | Static | | Unpredictable but simple |
+| Least Connection | Dynamic | | Chooses least busy server |
+| Weighted Least Connection| Dynamic | | Considers server power |
+| Resource-Based | Dynamic | | Monitors real-time load |
 
 
 # Docker Networking – Poznámky
@@ -835,16 +835,16 @@ If a server fails the health check, it is temporarily removed from rotation.
 
 | Typ siete  | Prístup k hostovi | Izolácia | Výkon | Využitie                                  |
 |------------|-------------------|----------|--------|-------------------------------------------|
-| Bridge     | Nie                | Áno      | 🟡      | Predvolené, flexibilné pre väčšinu prípadov |
-| Host       | Áno               | Nie       | 🟢      | Pri potrebe maximálneho výkonu             |
-| None       | Nie                | Áno      | 🔴      | Izolované výpočty, bezpečnosť             |
+| Bridge | Nie | Áno | | Predvolené, flexibilné pre väčšinu prípadov |
+| Host | Áno | Nie | | Pri potrebe maximálneho výkonu |
+| None | Nie | Áno | | Izolované výpočty, bezpečnosť |
 
 
 --- 
 
-# 🐳 Docker Logs & Debugging – Poznámky
+# Docker Logs & Debugging – Poznámky
 
-## 📥 Prístup do kontajnera
+## Prístup do kontajnera
 ```bash
 docker exec -it <container_id> bash
 ```
@@ -858,7 +858,7 @@ ls -la
 
 ---
 
-## 📋 Docker Logs – štandardný výstup
+## Docker Logs – štandardný výstup
 
 - Docker logy idú na `stdout` a `stderr`
 - Môžeme ich čítať pomocou príkazu:
@@ -869,7 +869,7 @@ docker logs <container_id_or_name>
 
 ---
 
-## 🕒 Logovanie podľa času
+## Logovanie podľa času
 
 ```bash
 docker logs --tail 5 <id>
@@ -893,7 +893,7 @@ docker logs --since 2023-10-01T00:00:00 <id>
 
 ---
 
-## 🔍 Filtrovanie logov
+## Filtrovanie logov
 
 ```bash
 docker logs <id> | grep "GET"
@@ -902,7 +902,7 @@ docker logs <id> | grep "GET"
 
 ---
 
-## 🔄 Sledovanie logov v reálnom čase
+## Sledovanie logov v reálnom čase
 
 ```bash
 docker logs -f <id>
@@ -915,14 +915,14 @@ docker logs -f --tail 50 <id>
 
 ---
 
-## ⚙️ Logging Driver
+## Logging Driver
 
 - Mechanizmus, ako sa logy ukladajú a spracovávajú
 - Predvolený: `json-file`
 
 ---
 
-## 🏃 Spúšťanie kontajnerov
+## Spúšťanie kontajnerov
 
 ```bash
 docker run --rm -d --name logdemo logdemo:1.0.0
@@ -935,7 +935,7 @@ docker run --rm -d --name logdemo logdemo:1.0.0
 
 ---
 
-## 🧷 Overwrite ENTRYPOINT
+## Overwrite ENTRYPOINT
 
 ```bash
 docker run -it --rm --entrypoint /bin/sh logdemo:1.0.0
@@ -945,7 +945,7 @@ docker run -it --rm --entrypoint /bin/sh logdemo:1.0.0
 
 ---
 
-## 🔍 Inšpekcia kontajnera
+## Inšpekcia kontajnera
 
 ```bash
 docker inspect <name> | grep Created
@@ -954,7 +954,7 @@ docker inspect <name> | grep Created
 
 ---
 
-## 🧹 Vymazanie kontajnerov
+## Vymazanie kontajnerov
 
 ```bash
 docker container prune
@@ -963,7 +963,7 @@ docker container prune
 
 ---
 
-## 📎 Práca s kontajnerom
+## Práca s kontajnerom
 
 ```bash
 docker exec <id> cat /app/app.py
@@ -977,7 +977,7 @@ docker attach <name>
 
 ---
 
-## ⏸️ Pozastavenie a obnovenie
+## Pozastavenie a obnovenie
 
 ```bash
 docker pause <id>
@@ -988,13 +988,13 @@ docker unpause <id>
 
 # Docker príkaz `docker stats`
 
-## 🧾 Popis
+## Popis
 
 Príkaz `docker stats`:
 
 - **Zobrazuje živé štatistiky** (v reálnom čase) o všetkých bežiacich Docker kontajneroch.
 
-## 🔍 Využitie
+## Využitie
 
 Slúži na monitorovanie systémových zdrojov, ktoré využívajú kontajnery:
 
@@ -1005,7 +1005,7 @@ Slúži na monitorovanie systémových zdrojov, ktoré využívajú kontajnery:
 - **BLOCK I/O** – Prístup k disku (čítanie / zápis)
 - **PIDS** – Počet procesov bežiacich v kontajneri
 
-## 📌 Príklady použitia
+## Príklady použitia
 
 ```bash
 # Zobrazenie štatistík všetkých bežiacich kontajnerov
@@ -1015,7 +1015,7 @@ docker stats
 docker stats <container_id_or_name>
 ```
 
-## ❗ Poznámka
+## Poznámka
 
 - Príkaz `docker stats` **nepozastavuje ani neobnovuje** procesy v kontajneri. Slúži **výhradne na monitorovanie**.
 
