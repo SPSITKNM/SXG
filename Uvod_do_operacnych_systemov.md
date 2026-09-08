@@ -1,4 +1,4 @@
-# Procesy a pipe v operačnom systéme
+# Úvod do operačných systémov
 
 Princípy **procesov, PCB, `fork()`, `wait()`** a **pipe** v operačnom systéme.
 Diagramy sú vysádzané ako bloky kódu, aby si zachovali štruktúru.
